@@ -14,10 +14,11 @@ export async function POST() {
     // Salva no banco
     await db.insert(adminOtps).values({ code, expiresAt })
 
-    // Envia por e-mail
-    await sendOtpEmail(code)
+    // TODO: reativar envio por e-mail quando domínio estiver verificado no Resend
+    // await sendOtpEmail(code)
 
-    return NextResponse.json({ success: true })
+    // Temporário: retorna o código direto para testes
+    return NextResponse.json({ success: true, devCode: code })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erro ao enviar código'
     console.error('[Admin OTP] Erro:', message)

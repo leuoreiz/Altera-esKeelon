@@ -12,6 +12,7 @@ export default function LoginClient() {
   const [code, setCode] = useState('')
   const [loadState, setLoadState] = useState<LoadState>('idle')
   const [error, setError] = useState<string | null>(null)
+  const [devCode, setDevCode] = useState<string | null>(null)
 
   const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? 'operacionalipplead@gmail.com'
 
@@ -21,12 +22,13 @@ export default function LoginClient() {
 
     try {
       const res = await fetch('/api/admin/send-otp', { method: 'POST' })
-      const json = (await res.json()) as { success?: boolean; error?: string }
+      const json = (await res.json()) as { success?: boolean; error?: string; devCode?: string }
 
       if (!res.ok || !json.success) {
         throw new Error(json.error ?? 'Erro ao enviar código')
       }
 
+      if (json.devCode) setDevCode(json.devCode)
       setStep('verify')
       setLoadState('idle')
     } catch (err) {
@@ -104,6 +106,13 @@ export default function LoginClient() {
                 </p>
                 <p className="text-xs text-gray-400">Válido por 10 minutos</p>
               </div>
+
+              {devCode && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg px-3 py-2 text-center">
+                  <p className="text-xs text-yellow-700 font-medium">Modo teste — seu código:</p>
+                  <p className="text-2xl font-mono font-bold text-yellow-800 tracking-widest mt-1">{devCode}</p>
+                </div>
+              )}
 
               <input
                 type="text"
