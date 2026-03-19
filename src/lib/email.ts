@@ -1,31 +1,23 @@
-// Envio de e-mails via Gmail SMTP (Nodemailer)
-// Configure GMAIL_USER e GMAIL_APP_PASSWORD no .env.local
+// Envio de e-mails via Resend
+// Configure RESEND_API_KEY no .env.local
 
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 
-function createTransporter() {
-  const user = process.env.GMAIL_USER
-  const pass = process.env.GMAIL_APP_PASSWORD
-
-  if (!user || !pass) {
-    throw new Error('GMAIL_USER e GMAIL_APP_PASSWORD devem estar configurados no .env.local')
-  }
-
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user, pass },
-  })
+function createResend() {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) throw new Error('RESEND_API_KEY deve estar configurado no .env.local')
+  return new Resend(apiKey)
 }
 
 /**
  * Envia o código OTP para o e-mail do admin
  */
 export async function sendOtpEmail(code: string): Promise<void> {
-  const adminEmail = process.env.ADMIN_EMAIL ?? 'operacionalipplead@gmail.com'
-  const transporter = createTransporter()
+  const resend = createResend()
+  const adminEmail = process.env.ADMIN_EMAIL ?? 'leonardo@keelon.com.br'
 
-  await transporter.sendMail({
-    from: `"Sistema de Revisão" <${process.env.GMAIL_USER}>`,
+  await resend.emails.send({
+    from: 'contato@keelon.com.br',
     to: adminEmail,
     subject: '🔑 Código de acesso — Admin',
     html: `
