@@ -12,6 +12,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^143.0.4",
     "@vercel/blob": "^0.27.0",
     "dotenv": "^17.3.1",
     "drizzle-orm": "^0.40.0",
@@ -21,7 +22,7 @@
     "nodemailer": "^6.10.0",
     "pdf-lib": "^1.17.1",
     "pg": "^8.13.3",
-    "puppeteer": "^24.3.1",
+    "puppeteer-core": "^24.40.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "resend": "^6.9.4",

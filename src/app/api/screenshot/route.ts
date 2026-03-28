@@ -22,12 +22,8 @@ export async function POST(request: NextRequest) {
 
     const { url, token } = parsed.data
 
-    const puppeteer = await import('puppeteer')
-    const browser = await puppeteer.default.launch({
-      headless: true,
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    })
+    const { launchBrowser } = await import('@/lib/browser')
+    const browser = await launchBrowser()
 
     try {
       const page = await browser.newPage()
