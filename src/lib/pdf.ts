@@ -111,7 +111,7 @@ export async function generateReviewPdf(
   fs.writeFileSync(localPath, pdfBuffer)
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
-  return { url: `${appUrl}/uploads/${filename}`, localPath }
+  return { url: `${appUrl}/api/uploads/${filename}`, localPath }
 }
 
 function getAnnotationTypeLabel(type: string): string {
