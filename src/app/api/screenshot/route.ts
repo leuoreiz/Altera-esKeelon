@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
     const puppeteer = await import('puppeteer')
     const browser = await puppeteer.default.launch({
       headless: true,
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     })
 
