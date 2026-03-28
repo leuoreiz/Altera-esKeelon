@@ -2,6 +2,7 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   serverExternalPackages: ['@sparticuz/chromium', 'puppeteer-core'],
+  transpilePackages: ['fabric'],
   // Inclui binários do Chromium no bundle serverless da Vercel
   ...(({
     experimental: {

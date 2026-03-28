@@ -3,6 +3,8 @@ import { z } from 'zod'
 import path from 'path'
 import fs from 'fs'
 
+export const maxDuration = 60
+
 const screenshotSchema = z.object({
   url: z.string().url('URL inválida'),
   token: z.string().uuid().optional(),
